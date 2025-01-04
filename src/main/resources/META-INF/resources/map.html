@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Map</title>
+    <!--    <link rel="stylesheet" type="text/css" href="/css/styles.css">-->
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA-__21xOkhgXpt6AQM7l6XsayP39NnZ1o"></script>
+    <script src="/js/script.js"></script>
+</head>
+<body>
+<div>
+    <label for="deviceSelect">Select Device:</label>
+    <select id="deviceSelect" onchange="updateMap()">
+        <!-- Options will be populated dynamically -->
+    </select>
+</div>
+<div>
+    <label for="startDate">Start Date:</label>
+    <input type="date" id="startDate">
+
+    <label for="endDate">End Date:</label>
+    <input type="date" id="endDate">
+
+    <button onclick="filterCoordinates()">Filter</button>
+</div>
+<div id="map" style="height: 500px; width: 100%;"></div>
+</body>
+</html>

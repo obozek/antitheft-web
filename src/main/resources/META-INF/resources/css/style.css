@@ -1,0 +1,72 @@
+.advanced-marker {
+    position: relative;
+    display: inline-block;
+    text-align: center;
+}
+
+.marker-container {
+    position: relative;
+    background: linear-gradient(135deg, #ff5722, #ff9800); /* Gradient for a modern look */
+    border-radius: 50%;
+    color: white;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-weight: bold;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+    transition: transform 0.2s, background-color 0.2s;
+    cursor: pointer;
+}
+
+.marker-container:hover {
+    transform: scale(1.1); /* Zoom effect on hover */
+    background: linear-gradient(135deg, #e64a19, #f57c00); /* Darken on hover */
+}
+
+.marker-content {
+    font-size: 14px;
+    line-height: 1.2;
+}
+
+.marker-label {
+    position: absolute;
+    bottom: -25px; /* Below the marker */
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #212121; /* Dark label background */
+    color: white;
+    padding: 3px 6px;
+    border-radius: 4px;
+    font-size: 12px;
+    white-space: nowrap;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    display: none; /* Hidden by default */
+}
+
+.marker-container:hover .marker-label {
+    display: block; /* Show label on hover */
+}
+
+.pin-container {
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+}
+
+.pin-label {
+    position: absolute;
+    bottom: 60px; /* Adjust based on pin size */
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #212121;
+    color: white;
+    padding: 5px 10px;
+    border-radius: 4px;
+    font-size: 12px;
+    white-space: nowrap;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    z-index: 10;
+    text-align: center;
+}

@@ -73,4 +73,8 @@ The Quarkus application configuration is located in `src/main/resources/applicat
 
 Easily start your REST Web Services
 
+### Deploy the app
+
+`gcloud app deploy target/antitheft-web-1.0.0-SNAPSHOT-runner.jar`
+
 [Related guide section...](https://quarkus.io/guides/getting-started-reactive#reactive-jax-rs-resources)

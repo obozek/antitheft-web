@@ -27,6 +27,13 @@
                 <type>pom</type>
                 <scope>import</scope>
             </dependency>
+            <dependency>
+                <groupId>${quarkus.platform.group-id}</groupId>
+                <artifactId>quarkus-google-cloud-services-bom</artifactId>
+                <version>${quarkus.platform.version}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
         </dependencies>
     </dependencyManagement>
 
@@ -50,6 +57,10 @@
         <dependency>
             <groupId>io.quarkus</groupId>
             <artifactId>quarkus-arc</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>io.quarkiverse.googlecloudservices</groupId>
+            <artifactId>quarkus-google-cloud-firestore</artifactId>
         </dependency>
         <dependency>
             <groupId>io.quarkus</groupId>
@@ -162,7 +173,7 @@
                 </dependencies>
                 <configuration>
                     <javaParameters>true</javaParameters>
-                    <jvmTarget>21</jvmTarget>
+                    <jvmTarget>17</jvmTarget>
                     <compilerPlugins>
                         <plugin>all-open</plugin>
                         <plugin>kotlinx-serialization</plugin>

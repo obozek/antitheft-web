@@ -1,2 +1,12 @@
 greeting:
   message: "hello"
+
+quarkus:
+  package:
+    jar:
+      type: UBER_JAR
+
+#
+#  google:
+#    cloud:
+#      service-account-location: "src/main/resources/service-account-credentials.json"
