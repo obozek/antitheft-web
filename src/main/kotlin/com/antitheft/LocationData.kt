@@ -1,5 +1,6 @@
 package com.antitheft
 
+import com.google.cloud.firestore.annotation.DocumentId
 import kotlinx.serialization.Contextual
 import kotlinx.serialization.Serializable
 import java.time.Instant
@@ -20,3 +21,16 @@ data class Location(
     val `when`: Instant = Instant.now(),
     val accuracy: Int = 0
 )
+
+@Serializable
+class Device(
+    @DocumentId
+    var id: String,
+    var partNumber: String,
+    @Serializable(with = EpochToInstantSerializer::class)
+    @Contextual
+    var firstRecordTime: Instant? = null,
+) {
+    // add no arg constructor for Firestore
+    constructor() : this("", "")
+}

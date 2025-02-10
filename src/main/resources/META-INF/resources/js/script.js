@@ -40,56 +40,123 @@ async function initMap(coordinates) {
     });
 }
 
-async function filterCoordinates() {
-    const startDate = document.getElementById("startDate").value;
-    const endDate = document.getElementById("endDate").value;
-    const deviceId = document.getElementById('deviceSelect').value;
-
-    if (!startDate || !endDate) {
-        alert("Please select both start and end dates.");
-        return;
-    }
-
-    const response = await fetch(`${appUrl}/coordinates?deviceId=${deviceId}&startDate=${startDate}T00:00:00Z&endDate=${endDate}T23:59:59Z`);
-    const coordinates = await response.json();
-
-    // Clear the map and reload with filtered points
-    initMap(coordinates);
+function updateMapSync() {
+    updateMap().then(r => console.log('Map updated'));
 }
 
-async function populateDeviceDropdown() {
-    const response = await fetch(`${appUrl}/devices`);
-    const devices = await response.json();
+function setUp() {
+    let deviceSelect = document.getElementById('deviceSelect')
+    const selectedOption = deviceSelect.options[deviceSelect.selectedIndex];
+    const firstRecordTime = selectedOption.getAttribute('data-firstRecordTime');
+    const date = new Date(firstRecordTime * 1000); // Convert epoch seconds to milliseconds
+    setFirstRecordDate(date);
+    setPickerDate(date);
+    updateMapSync();
+}
 
-    const deviceSelect = document.getElementById('deviceSelect');
-    deviceSelect.innerHTML = ''; // Clear existing options
+function setFirstRecordDate(date) {
+    document.getElementById('selectedDate').textContent = date.toLocaleString();
+}
 
-    devices.forEach(device => {
-        const option = document.createElement('option');
-        option.value = device;
-        option.textContent = device;
-        deviceSelect.appendChild(option);
-    });
+document.getElementById('deviceSelect').addEventListener('change', setUp);
 
-    // Automatically load the first device's data
-    if (devices.length > 0) {
-        updateMap();
+document.getElementById('decreaseDate').addEventListener('click', function () {
+    const currentDate = getPickerDate()
+    currentDate.setDate(currentDate.getDate() - 1);
+    setPickerDate(currentDate);
+    updateMapSync()
+});
+
+document.getElementById('increaseDate').addEventListener('click', function () {
+    const currentDate = getPickerDate()
+    currentDate.setDate(currentDate.getDate() + 1);
+    setPickerDate(currentDate);
+    updateMapSync()
+});
+// Global variable to store the picker instance.
+let picker;
+
+document.addEventListener('DOMContentLoaded', function () {
+    picker = new tempusDominus.TempusDominus(
+        document.getElementById('datepicker'),
+        {
+            display: {
+                components: {
+                    calendar: true,
+                    date: true,
+                    month: true,
+                    year: true,
+                    decades: true,
+                    clock: false
+                },
+                buttons: {
+                    today: true,
+                    clear: true,
+                    close: true
+                }
+            }
+            // You can add more configuration options here if needed.
+        }
+    );
+    setUp();
+});
+
+/**
+ * Sets the picker's date to tomorrow.
+ * This function can be modified to set the date to any value you need.
+ */
+function setPickerDate(date) {
+    if (picker) {
+        // Set the new date into the picker.
+        // This updates both the internal state and the input's displayed value.
+        picker.dates.setValue(tempusDominus.DateTime.convert(date));
     }
 }
 
-populateDeviceDropdown();
+function getPickerDate() {
+    if (picker) {
+        // Set the new date into the picker.
+        // This updates both the internal state and the input's displayed value.
+        return new Date(picker.dates.lastPicked);
+    }
+    return null;
+}
+
+// async function populateDeviceDropdown() {
+//     const response = await fetch(`${appUrl}/devices`);
+//     const devices = await response.json();
+//
+//     const deviceSelect = document.getElementById('deviceSelect');
+//     deviceSelect.innerHTML = ''; // Clear existing options
+//
+//     devices.forEach(device => {
+//         const option = document.createElement('option');
+//         option.value = device;
+//         option.textContent = device;
+//         deviceSelect.appendChild(option);
+//     });
+//
+//     // Automatically load the first device's data
+//     if (devices.length > 0) {
+//         updateMap();
+//     }
+// }
+
+// populateDeviceDropdown();
 
 async function updateMap() {
     const deviceId = document.getElementById('deviceSelect').value;
+    const date = getPickerDate();
+    // get the date in the format yyyy-mm-dd
+    const startDate = date.toISOString().split('T')[0];
 
-    const startDate = document.getElementById("startDate")?.value || '1970-01-01';
-    const endDate = document.getElementById("endDate")?.value || '2100-01-01';
 
-    const response = await fetch(`${appUrl}/coordinates?deviceId=${deviceId}&startDate=${startDate}T00:00:00Z&endDate=${endDate}T23:59:59Z`);
+    const response = await fetch(`${appUrl}/coordinates?deviceId=${deviceId}&startDate=${startDate}T00:00:00Z&endDate=${startDate}T23:59:59Z`);
     const coordinates = await response.json();
 
-    initMap(coordinates);
+    await initMap(coordinates);
 }
+
 
 
 

@@ -22,7 +22,7 @@ class WatchListener(private val firestoreRepository: FirestoreRepository) {
     fun listen(deviceData: LocationData): Response {
         logger.info("Received message: {}", deviceData)
 
-        firestoreRepository.saveLocations(deviceData.deviceId, deviceData.locations)
+        firestoreRepository.saveLocations(deviceData.deviceId, deviceData.partNumber, deviceData.locations)
             .thenAccept {
                 println("Locations saved successfully")
             }

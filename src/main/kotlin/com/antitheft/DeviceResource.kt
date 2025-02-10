@@ -10,7 +10,7 @@ class DeviceResource(private val firestoreService: FirestoreRepository) {
 
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    fun getDevices(): List<String> {
+    fun getDevices(): List<Device> {
         return firestoreService.fetchAllDeviceIds()
     }
 }

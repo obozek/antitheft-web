@@ -1,5 +1,5 @@
-import com.antitheft.FirestoreRepository
-import com.antitheft.Location
+package com.antitheft
+
 import jakarta.ws.rs.GET
 import jakarta.ws.rs.Path
 import jakarta.ws.rs.Produces
@@ -25,4 +25,22 @@ class CoordinateResource(private val firestoreService: FirestoreRepository) {
         }
         return firestoreService.fetchCoordinatesInRange(deviceId, startInstant, endInstant)
     }
+
+//    @GET
+//    @Path("/density")
+//    @Produces(MediaType.APPLICATION_JSON)
+//    fun getDensityData(
+//        @QueryParam("deviceId") deviceId: String,
+//        @QueryParam("startDate") startDate: String?,
+//        @QueryParam("endDate") endDate: String?,
+//        @QueryParam("intervalSeconds") intervalSeconds: Long
+//    ): List<Location> {
+//        val startInstant = startDate?.let {
+//            Instant.parse(startDate)
+//        }
+//        val endInstant = endDate?.let {
+//            Instant.parse(endDate)
+//        }
+//        return firestoreService.getDensityData(deviceId, startInstant, endInstant, intervalSeconds)
+//    }
 }

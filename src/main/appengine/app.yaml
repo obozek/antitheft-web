@@ -1,1 +1,4 @@
 runtime: java17
+
+env_variables:
+  APP_URL: https://antitheft-446109.ew.r.appspot.com

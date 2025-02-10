@@ -1,12 +1,40 @@
 greeting:
   message: "hello"
 
+app:
+  url: http://your-app-url.com
+
 quarkus:
   package:
     jar:
       type: UBER_JAR
 
-#
-#  google:
-#    cloud:
-#      service-account-location: "src/main/resources/service-account-credentials.json"
+  http:
+    auth:
+      permission:
+        authenticated:
+          paths: /logout
+          policy: 'authenticated'
+  # Auth0 OIDC configuration
+  oidc:
+    client-id: 'VyD0jnl7N5NJ4Smv6LUc5iDWd3mzOumJ'
+    authentication:
+      scopes: openid,profile,email
+    auth-server-url: https://dev-5ziwme0u5y7her41.eu.auth0.com
+    credentials:
+      secret:
+
+    application-type: web-app
+    logout:
+      path: '/logout'
+      post-logout-path: '/'
+      post-logout-uri-param: 'returnTo'
+      extra-params:
+        client_id: '${quarkus.oidc.client-id}'
+    end-session-path: 'v2/logout'
+
+  google:
+    cloud:
+      service-account-location: "src/main/resources/service-account-credentials.json"
+
+
