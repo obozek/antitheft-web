@@ -1,0 +1,15 @@
+{#include base activePage = "home"}
+    {#title}Home{/title}
+    {#content}
+        <div class="row mt-3">
+            <div class="col">
+                {#if loggedIn}
+                    <p>Welcome, {username}!</p>
+                    <a href="/logout">Logout</a>
+                {#else}
+                    Hello, start with <a href="/dashboard">Login</a>
+                {/if}
+            </div>
+        </div>
+    {/content}
+{/include}

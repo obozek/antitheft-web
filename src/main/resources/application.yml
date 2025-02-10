@@ -22,8 +22,7 @@ quarkus:
       scopes: openid,profile,email
     auth-server-url: https://dev-5ziwme0u5y7her41.eu.auth0.com
     credentials:
-      secret:
-
+      secret: ${sm//oauth0-client-secret}
     application-type: web-app
     logout:
       path: '/logout'
@@ -36,5 +35,6 @@ quarkus:
   google:
     cloud:
       service-account-location: "src/main/resources/service-account-credentials.json"
+      project-id: "antitheft-446109"
 
 
